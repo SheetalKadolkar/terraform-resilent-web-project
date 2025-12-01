@@ -10,7 +10,7 @@ data "aws_ami" "linux" {
 
 resource "aws_launch_template" "lt" {
   image_id      = data.aws_ami.linux.id
-  instance_type = "t2.micro"  # ✅ Free tier eligible
+  instance_type = "t3.micro" 
 
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2_profile.name
