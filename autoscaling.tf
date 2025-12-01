@@ -31,3 +31,22 @@ resource "aws_autoscaling_policy" "scale_in" {
   scaling_adjustment     = -1
   cooldown               = 300
 }
+resource "aws_cloudwatch_metric_alarm" "high_cpu" {
+  alarm_name          = "${var.project}-high-cpu"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = 60
+  statistic           = "Average"
+  threshold           = 70  # triggers if CPU > 70%
+  alarm_description   = "Scale out if CPU > 70%"
+
+  dimensions = {
+    AutoScalingGroupName = aws_autoscaling_group.asg.name
+  }
+
+  # Link scale-out and scale-in policies
+  alarm_actions = [aws_autoscaling_policy.scale_out.arn]
+  ok_actions    = [aws_autoscaling_policy.scale_in.arn]
+}
