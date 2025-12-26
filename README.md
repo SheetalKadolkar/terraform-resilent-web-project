@@ -27,6 +27,7 @@ This project uses **Terraform** to provision a scalable AWS infrastructure in **
 ## 📂 Project Structure
 
 TERRAFORM-RESILIENT-WEB-PROJECT
+
 ├── autoscaling.tf
 ├── elb.tf
 ├── iam.tf
